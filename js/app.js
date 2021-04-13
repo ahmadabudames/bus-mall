@@ -15,10 +15,15 @@ let rightIndex;
 let centerIndex;
 let leftIndex;
 
+let votesArray=[];
+let showArray=[];
+let nameArray=[];
+
 function busMall(name,source){
     this.name=name;
     this.source=source;
     this.votes=0;
+    this.shown=0;
 
     busMall.allBusMall.push(this)
 }
@@ -105,7 +110,20 @@ function userClick(event){
 
        
     }else{
-     
+     let button=document.getElementById('button');
+
+     button.addEventListener('click',results);
+     button.hidden=false;
+for(let i=0; i<busMall.allBusMall.length;i++){
+votesArray.push(busMall.allBusMall[i].votes);
+showArray.push(busMall.allBusMall[i].shown);}
+
+leftElement.removeEventListener('click',userClick);
+        centerElement.removeEventListener('click',userClick);
+        rightElement.removeEventListener('click',userClick);
+    }
+}
+function results(){
         let list=document.getElementById('result');
         let busMallResult;
         for(let i=0; i<busMall.allBusMall.length;i++){
@@ -115,12 +133,6 @@ function userClick(event){
         busMallResult.textContent=`${busMall.allBusMall[i].name} has ${busMall.allBusMall[i].votes}`
         
         }
-        leftElement.removeEventListener('click',userClick);
-        centerElement.removeEventListener('click',userClick);
-        rightElement.removeEventListener('click',userClick);
-
+        button.removeEventListener('click',results);
 
     }
-}
-
-

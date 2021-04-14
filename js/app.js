@@ -58,29 +58,19 @@ function randomIndex(){
     return Math.floor(Math.random()* busMall.allBusMall.length);
 }
 // console.log(randomIndex);
-
+let shownImages=[];
 function renderImages(){
     leftIndex=randomIndex();
     rightIndex=randomIndex();
     centerIndex=randomIndex();
 
-    while (leftIndex===rightIndex){
+    while (leftIndex===rightIndex ||leftIndex===centerIndex || centerIndex === rightIndex || shownImages.includes(leftIndex)||shownImages.includes(centerIndex)||shownImages.includes(rightIndex)) {
+        leftIndex=randomIndex();
         rightIndex=randomIndex();
-        
-        
-    }
-    
-    while (leftIndex===centerIndex){
         centerIndex=randomIndex();
-        
-        
-    }
-    while (rightIndex===centerIndex){
-        centerIndex=randomIndex();
-        
-        
-    }
-   
+      }
+
+      shownImages=[leftIndex,centerIndex,randomIndex];
 
     leftElement.src=busMall.allBusMall[leftIndex].source;
     busMall.allBusMall[leftIndex].shown++;
@@ -139,7 +129,7 @@ function results(){
             busMallResult=document.createElement('li');
             list.appendChild(busMallResult);
         
-        busMallResult.textContent=`${busMall.allBusMall[i].name} has ${busMall.allBusMall[i].votes}`
+        busMallResult.textContent=`${busMall.allBusMall[i].name} has ${busMall.allBusMall[i].votes} votes and was seen ${busMall.allBusMall[i].shown} times`
         
         }
         button.removeEventListener('click',results);
